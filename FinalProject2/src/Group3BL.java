@@ -4,17 +4,14 @@ import javax.swing.*;
 
 public class Group3BL {
 
-    // Handles login validation
     public static boolean loginUser(String userId, String hashedPassword) {
         return Group3DL.validateLogin(userId, hashedPassword);
     }
 
-    // Fetches user role (admin/client)
     public static String getUserRole(String userId) {
         return Group3DL.fetchUserRole(userId);
     }
 
-    // Admin can add new client
     public static void addNewClient() {
         String id = JOptionPane.showInputDialog("Enter new client ID:");
         String name = JOptionPane.showInputDialog("Enter client name:");
@@ -31,7 +28,6 @@ public class Group3BL {
         }
     }
 
-    // Admin can add new admin
     public static void addNewAdmin() {
         String id = JOptionPane.showInputDialog("Enter new admin ID:");
         String name = JOptionPane.showInputDialog("Enter admin name:");
@@ -48,16 +44,11 @@ public class Group3BL {
         }
     }
 
-    // Admin can view any table
     public static void viewTable(String tableName) {
         String tableData = Group3DL.getFormattedTable(tableName);
         JOptionPane.showMessageDialog(null, tableData);
     }
     
-    
-    
-
-    // Client sees their own courses + info
     public static void viewStudentInfo(String userId) {
         String info = Group3DL.getStudentDetails(userId);
         if (info != null && !info.isEmpty()) {
@@ -67,7 +58,6 @@ public class Group3BL {
         }
     }
 
-    // Client transfers credits to another user
     public static void transferMoney(String fromUser, String toUser, double amount) {
         boolean transfer = Group3DL.performMoneyTransfer(fromUser, toUser, amount);
         if (transfer) {
@@ -79,7 +69,6 @@ public class Group3BL {
 
     public static class Hashing {
 
-        // Returns the SHA-1 hash of a string formatted to 40-character hexadecimal
         public static String sha1(String input) {
             String sha1 = "";
             try {
@@ -87,7 +76,6 @@ public class Group3BL {
                 digest.reset();
                 byte[] dig = digest.digest(input.getBytes("utf8"));
 
-                // Convert to 40-character hexadecimal string
                 sha1 = String.format("%040x", new java.math.BigInteger(1, dig));
             } catch (Exception e) {
                 e.printStackTrace();

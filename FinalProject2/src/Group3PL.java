@@ -14,8 +14,8 @@ public class Group3PL {
         while (running) {
             String[] options = {"Login", "Exit"};
             int choice = JOptionPane.showOptionDialog(null,
-                    "Welcome to LearnX!",
-                    "LearnX Portal",
+                    "Welcome!",
+                    "Login Page",
                     JOptionPane.DEFAULT_OPTION,
                     JOptionPane.INFORMATION_MESSAGE,
                     null,

@@ -11,7 +11,6 @@ public class Group3DL {
     private static final String DB_USER = "root";
     private static final String DB_PASS = "admin";
 
-    // Validate login credentials
     public static boolean validateLogin(String userId, String hashedPassword) {
         String query = "SELECT * FROM Users WHERE user_id = ? AND password_hash = ?";
         try (Connection conn = DriverManager.getConnection(DB_URL, DB_USER, DB_PASS);
@@ -21,7 +20,7 @@ public class Group3DL {
             stmt.setString(2, hashedPassword);
 
             ResultSet rs = stmt.executeQuery();
-            return rs.next();  // login valid if found
+            return rs.next();
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -29,7 +28,6 @@ public class Group3DL {
         }
     }
 
-    // Get user role (admin or client)
     public static String fetchUserRole(String userId) {
         String query = "SELECT role FROM Users WHERE user_id = ?";
         try (Connection conn = DriverManager.getConnection(DB_URL, DB_USER, DB_PASS);
@@ -50,27 +48,25 @@ public class Group3DL {
         }
     }
 
-    // Insert new user (admin/client)
-    public static boolean insertUser(String id, String name, String hash, String role) {
-        String query = "INSERT INTO Users (user_id, name, password_hash, role) VALUES (?, ?, ?, ?)";
+    public static boolean insertUser(String id, String name, String password, String role) {
+        String sql = "{CALL insertUser(?, ?, ?, ?)}";
         try (Connection conn = DriverManager.getConnection(DB_URL, DB_USER, DB_PASS);
-             PreparedStatement stmt = conn.prepareStatement(query)) {
-
+             CallableStatement stmt = conn.prepareCall(sql)) {
+    
             stmt.setString(1, id);
             stmt.setString(2, name);
-            stmt.setString(3, hash);
+            stmt.setString(3, password);
             stmt.setString(4, role);
-
-            int rows = stmt.executeUpdate();
-            return rows == 1;
-
+    
+            stmt.execute();
+            return true;
+    
         } catch (Exception e) {
             e.printStackTrace();
             return false;
         }
     }
-
-    // Show contents of any table (admin only) — with table whitelist
+    
     public static String getTableAsString(String tableName) {
         List<String> allowedTables = Arrays.asList("users", "accounts", "courses", "enrollments", "transactions");
 
@@ -105,7 +101,6 @@ public class Group3DL {
         return sb.toString();
     }
 
-    // View personal info (client only) — FIXED to show balance from accounts
     public static String getStudentDetails(String userId) {
         StringBuilder sb = new StringBuilder();
         String query = "SELECT u.user_id, u.name, u.role, a.balance " +
@@ -132,7 +127,6 @@ public class Group3DL {
         return sb.toString();
     }
 
-    // Credit transfer using stored procedure
     public static boolean performMoneyTransfer(String fromUser, String toUser, double amount) {
         String transferProc = "{ CALL transfer_credits(?, ?, ?) }";
 
@@ -162,19 +156,16 @@ public class Group3DL {
             ResultSetMetaData meta = rs.getMetaData();
             int columnCount = meta.getColumnCount();
     
-            // Header row
             for (int i = 1; i <= columnCount; i++) {
                 result.append(String.format("%-25s", meta.getColumnName(i)));
             }
             result.append("\n");
     
-            // Divider
             for (int i = 1; i <= columnCount; i++) {
                 result.append("--------------------");
             }
             result.append("\n");
     
-            // Data rows
             while (rs.next()) {
                 for (int i = 1; i <= columnCount; i++) {
                     result.append(String.format("%-25s", rs.getString(i)));
