@@ -96,3 +96,19 @@ BEGIN
 END //
 
 DELIMITER ;
+
+DELIMITER //
+
+CREATE OR REPLACE PROCEDURE insertUser(
+    IN uid VARCHAR(50),
+    IN uname VARCHAR(100),
+    IN upassword VARCHAR(100),
+    IN urole VARCHAR(20)
+)
+BEGIN
+    INSERT INTO users (user_id, name, password_hash, role)
+    VALUES (uid, uname, upassword, urole);
+END //
+
+DELIMITER ;
+
