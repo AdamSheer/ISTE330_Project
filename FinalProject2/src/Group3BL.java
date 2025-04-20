@@ -50,13 +50,12 @@ public class Group3BL {
 
     // Admin can view any table
     public static void viewTable(String tableName) {
-        String tableData = Group3DL.getTableAsString(tableName);
-        if (tableData != null && !tableData.isEmpty()) {
-            JOptionPane.showMessageDialog(null, tableData);
-        } else {
-            JOptionPane.showMessageDialog(null, "Table not found or empty.", "Info", JOptionPane.INFORMATION_MESSAGE);
-        }
+        String tableData = Group3DL.getFormattedTable(tableName);
+        JOptionPane.showMessageDialog(null, tableData);
     }
+    
+    
+    
 
     // Client sees their own courses + info
     public static void viewStudentInfo(String userId) {

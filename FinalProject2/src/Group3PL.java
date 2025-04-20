@@ -71,9 +71,23 @@ public class Group3PL {
                 case 0 -> Group3BL.addNewClient();
                 case 1 -> Group3BL.addNewAdmin();
                 case 2 -> {
-                    String tableName = JOptionPane.showInputDialog("Enter table name to view:");
-                    Group3BL.viewTable(tableName);
+                    String[] tables = {"Users", "Accounts", "Courses", "Enrollments", "Transactions"};
+                    String selectedTable = (String) JOptionPane.showInputDialog(
+                            null,
+                            "Select a table to view:",
+                            "View Table",
+                            JOptionPane.QUESTION_MESSAGE,
+                            null,
+                            tables,
+                            tables[0]
+                    );
+                
+                    if (selectedTable != null) {
+                        Group3BL.viewTable(selectedTable);
+                    }
                 }
+                
+                
                 case 3 -> loggedIn = false;
             }
         }

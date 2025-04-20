@@ -1,6 +1,10 @@
 import java.sql.*;
 import java.util.*;
 
+import javax.swing.JOptionPane;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+
 public class Group3DL {
 
     private static final String DB_URL = "jdbc:mariadb://localhost:3306/iste330";
@@ -147,4 +151,42 @@ public class Group3DL {
             return false;
         }
     }
+
+    public static String getFormattedTable(String tableName) {
+        StringBuilder result = new StringBuilder();
+    
+        try (Connection conn = DriverManager.getConnection(DB_URL, DB_USER, DB_PASS);
+             Statement stmt = conn.createStatement();
+             ResultSet rs = stmt.executeQuery("SELECT * FROM " + tableName)) {
+    
+            ResultSetMetaData meta = rs.getMetaData();
+            int columnCount = meta.getColumnCount();
+    
+            // Header row
+            for (int i = 1; i <= columnCount; i++) {
+                result.append(String.format("%-25s", meta.getColumnName(i)));
+            }
+            result.append("\n");
+    
+            // Divider
+            for (int i = 1; i <= columnCount; i++) {
+                result.append("--------------------");
+            }
+            result.append("\n");
+    
+            // Data rows
+            while (rs.next()) {
+                for (int i = 1; i <= columnCount; i++) {
+                    result.append(String.format("%-25s", rs.getString(i)));
+                }
+                result.append("\n");
+            }
+    
+        } catch (SQLException e) {
+            return "Error reading table: " + e.getMessage();
+        }
+    
+        return result.toString();
+    }
+    
 }
