@@ -77,7 +77,7 @@ INSERT INTO transactions (from_user, to_user, amount) VALUES
 -- Stored Procedure for Credit Transfer
 DELIMITER //
 
-CREATE PROCEDURE transfer_credits(IN fromUser VARCHAR(50), IN toUser VARCHAR(50), IN amt DECIMAL(10,2))
+CREATE PROCEDURE transfer_money(IN fromUser VARCHAR(50), IN toUser VARCHAR(50), IN amt DECIMAL(10,2))
 BEGIN
     DECLARE fromBalance DECIMAL(10,2);
 
