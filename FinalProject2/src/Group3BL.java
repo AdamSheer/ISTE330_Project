@@ -22,9 +22,9 @@ public class Group3BL {
 
         String hash = Hashing.sha1(password);
 
-        boolean success = Group3DL.insertUser(id, name, hash, "client");
+        boolean client = Group3DL.insertUser(id, name, hash, "client");
 
-        if (success) {
+        if (client) {
             JOptionPane.showMessageDialog(null, "Client added successfully!");
         } else {
             JOptionPane.showMessageDialog(null, "Failed to add client.", "Error", JOptionPane.ERROR_MESSAGE);
@@ -39,9 +39,9 @@ public class Group3BL {
 
         String hash = Hashing.sha1(password);
 
-        boolean success = Group3DL.insertUser(id, name, hash, "admin");
+        boolean admin = Group3DL.insertUser(id, name, hash, "admin");
 
-        if (success) {
+        if (admin) {
             JOptionPane.showMessageDialog(null, "Admin added successfully!");
         } else {
             JOptionPane.showMessageDialog(null, "Failed to add admin.", "Error", JOptionPane.ERROR_MESSAGE);
@@ -69,9 +69,9 @@ public class Group3BL {
     }
 
     // Client transfers credits to another user
-    public static void transferCredits(String fromUser, String toUser, double amount) {
-        boolean success = Group3DL.performCreditTransfer(fromUser, toUser, amount);
-        if (success) {
+    public static void transferMoney(String fromUser, String toUser, double amount) {
+        boolean transfer = Group3DL.performMoneyTransfer(fromUser, toUser, amount);
+        if (transfer) {
             JOptionPane.showMessageDialog(null, "Transfer successful.");
         } else {
             JOptionPane.showMessageDialog(null, "Transfer failed. Check balance or user ID.", "Error", JOptionPane.ERROR_MESSAGE);

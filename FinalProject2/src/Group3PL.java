@@ -80,7 +80,7 @@ public class Group3PL {
     }
 
     private void clientMenu(String userId) {
-        String[] options = {"View My Info", "Transfer Credits", "Logout"};
+        String[] options = {"View My Info", "Transfer Money", "Logout"};
         boolean loggedIn = true;
 
         while (loggedIn) {
@@ -100,7 +100,7 @@ public class Group3PL {
                     String amountStr = JOptionPane.showInputDialog("Enter amount to transfer:");
                     double amount = Double.parseDouble(amountStr);
 
-                    Group3BL.transferCredits(userId, toUser, amount);
+                    Group3BL.transferMoney(userId, toUser, amount);
                 }
                 case 2 -> loggedIn = false;
             }

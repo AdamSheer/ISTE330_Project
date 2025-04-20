@@ -129,7 +129,7 @@ public class Group3DL {
     }
 
     // Credit transfer using stored procedure
-    public static boolean performCreditTransfer(String fromUser, String toUser, double amount) {
+    public static boolean performMoneyTransfer(String fromUser, String toUser, double amount) {
         String transferProc = "{ CALL transfer_credits(?, ?, ?) }";
 
         try (Connection conn = DriverManager.getConnection(DB_URL, DB_USER, DB_PASS);
